@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<H2>
+  <SourceCode>
+"In Create TeamMentor Menu Script".info();
+var visualStudio = new VisualStudio_2010();
+var teamMentorGui = new TeamMentor_Gui();
+var scriptsFolder =  @"VS_PlugIns\Create TeamMentor Menu.h2".local().parentFolder();
+var TeamMentorMenu = visualStudio.dte().add_TopMenu("TeamMentor-1");
+
+TeamMentorMenu//.add_Menu_Button("--",()=&gt;{}) 
+		.add_Menu_Button("Open TeamMentor Landing Pages Window", ()=&gt; teamMentorGui.createLandingPagesWindow())
+		.add_Menu_Button("Open TeamMentor + Cat.Net Config Window", ()=&gt; teamMentorGui.createOptionsWindow())
+		.add_Menu_Button("Open Cat.NET -&gt; TeamMentor Mappings", ()=&gt; visualStudio.open_Document(@"TeamMentor_Files\CatNet_Mappings_TM_Embedded.xml".local()))
+		.add_Menu_Button("------- Debug-----")
+		.add_Menu_Button("Trigger Scan", () =&gt; visualStudio.dte().Solution.SolutionBuild.Build())			  
+          .add_Menu_Button("LogViewer", () =&gt; visualStudio.open_LogViewer())
+          .add_Menu_Button("Scripts Editor", ()=&gt; scriptsFolder.open_Script_Viewer_GUI())
+          .add_Menu_Button("Stand Alone Script Editor ", () =&gt; visualStudio.open_ScriptEditor());
+             
+return visualStudio;
+//O2File:VS_Scripts\TeamMentor_Gui.cs
+//O2Ref:TeamMentor_VisualStudio_with_CatNet.dll</SourceCode>
+  <ReferencedAssemblies />
+</H2>

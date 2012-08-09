@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<H2>
+  <SourceCode>
+var options = TeamMentor_Gui.Options;
+
+//options.DefaultPage = "http://docs.teammentor.net/article/TM_Landing_Page"; 
+ 
+"In Create TeamMentor Landings Pages Window".info();
+var visualStudio = TeamMentor_Gui.visualStudio; 
+var windowTitle = "TeamMentor - Landing Pages";
+visualStudio.window(windowTitle).close();
+options.LandingPages_Panel = visualStudio.create_WinForms_Window(windowTitle);
+
+var topPanel = options.LandingPages_Panel.add_Panel(true);
+options.LandingPages_Browser = topPanel.add_WebBrowser();
+var browser = options.LandingPages_Browser;
+
+browser.open(options.DefaultPage);
+
+browser.Navigating += (sender, e) =&gt; 
+	{		
+		"Navigating to: {0}".info(e.Url); 
+		var open = e.Url.str().contains(@"/TeamMentor_Files/") || e.Url.str() == options.DefaultPage;
+		if(open.isFalse())
+		{
+			e.Cancel = true;
+			
+            var url = e.Url.str();
+            if(url.starts(@"about:"))
+                url = "http://teammentor.net/article/{0}".format(url.remove(@"about:"));
+            "Opening {0} in new window".info(url);
+			visualStudio.dte().ItemOperations.Navigate(url, EnvDTE.vsNavigateOptions.vsNavigateOptionsNewWindow);
+		}
+	};
+return "done";
+
+//O2File:VS_Scripts\TeamMentor_Gui.cs
+//O2Ref:TeamMentor_VisualStudio_with_CatNet.dll</SourceCode>
+  <ReferencedAssemblies />
+</H2>

@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<H2>
+  <SourceCode>var visualStudio = new VisualStudio_2010();
+var options = TeamMentor_Gui.Options;
+
+VisualStudio_2010.On_BuildBegin.clear().add(()=&gt; visualStudio.errorList().clear());
+  
+VisualStudio_2010.On_ProjectBuild_OK.Clear();
+//var project = @"SuperSecureBankService\SuperSecureBankService.csproj".project();
+//errorList.Show();
+//using Microsoft.VisualStudio.Shell;
+
+var catNetMappings = @"TeamMentor_Files\CatNet_Mappings_Embedded.xml".local().load&lt;CatNet_Rules_Mappings&gt;();
+
+Action&lt;ErrorTask&gt; itemSelected = 	
+	(item)=&gt;{			
+				 
+				var browser= options.LandingPages_Browser;//"landingPages".o2Cache&lt;WebBrowser&gt;();
+				browser.windowBase().show(); 
+				/*Action remapBrowserLinks = 
+					()=&gt;{
+							
+							foreach(var link in browser.links())
+							{
+								var originalValue = link.attribute("href");
+								if(originalValue.starts("about:"))
+								{
+									var newValue = "http://teammentor.net/article/{0}".format(originalValue.remove("about:"));
+									//"Remaped browser Link '{0}' to '{1}'".info(originalValue, newValue);
+									link.attribute("href",newValue);
+								}
+								//.first()
+							}
+						};*/
+				O2Thread.mtaThread(
+					()=&gt;{
+							
+							var vulnType = item.Text;
+							//browser.open(item.Document);								
+							if(catNetMappings.hasItem(vulnType))						
+							{
+								var target = catNetMappings.item(vulnType);
+								if (target.isUri())
+									browser.open(target); 
+								else
+								{
+									var _file = @"TeamMentor_Files\{0}".format(target).local();
+									{												
+										browser.open(_file);
+										browser.waitForCompleted();												
+										//remapBrowserLinks();
+									}
+								} 
+							}  
+							else
+								browser.showMessage(vulnType); 
+						});
+			};
+Action&lt;string&gt; onProjectBuild = 
+	(projectFile)=&gt;
+			{ 
+				options.LandingPages_Browser.open(options.DefaultPage);
+				var project = projectFile.project();
+				var assemblyToScan = project.pathTo_CompiledAssembly();
+				
+				"Project '{0}' built OK, scanning assembly: {1}".format(projectFile, assemblyToScan).add_Message();
+				O2Thread.mtaThread(
+					()=&gt;{
+							var catNet = new API_CatNet().loadRules(); 
+							var findings = catNet.scan(assemblyToScan).savedReport().findings();
+							"Project '{0}' scan finished with {1} findings".format(projectFile, findings.size()).add_Message();
+							var errorList = visualStudio.errorList();
+							//catNet.show("results".popupWindow());
+							foreach(var finding in findings)
+							{ 
+								var file= finding.file;  
+								var vulnType =  finding.vulnType;
+								var line = (int)finding.lineNumber; 
+								
+								var item = errorList.add_Error(vulnType, file,line, 0);	
+								
+								item.Navigate += (sender,e)=&gt; itemSelected(item);;
+							}
+						});
+	
+			};
+			
+Action buildSolution = 			
+	()=&gt;{
+			"New Solution loaded, so triggering Solution Build".info().add_Message();
+			visualStudio.dte().Solution.SolutionBuild.Build();
+		};
+VisualStudio_2010.On_ProjectBuild_OK.clear().add(onProjectBuild);	
+
+VisualStudio_2010.On_SolutionOpened.clear().add(buildSolution);	
+
+visualStudio.errorList().add_Message("TeamMentor and CatNet is Setup");
+return "all_set";
+//_O2File:E:\O2_V4\O2.FluentSharp\O2.FluentSharp.VisualStudio_2010\ExtensionMethods\VisualStudio_2010_ExtensionMethods.cs
+//_O2File:E:\O2_V4\O2.FluentSharp\O2.FluentSharp.VisualStudio_2010\ExtensionMethods\VS_ErrorListProvider_ExtensionMethods.cs
+//_O2File:ExtensionMethods\VisualStudio_2010_ExtensionMethods.cs
+//_O2File:ExtensionMethods\VS_ErrorListProvider_ExtensionMethods.cs
+//O2File:E:\TeamMentor\TeamMentor_VisualStudio_Extensions\TeamMentor_VisualStudio_with_CatNet\VS_Scripts\TeamMentor_Gui.cs
+//O2File:API_CatNet.cs
+//O2Ref:TeamMentor_VisualStudio_with_CatNet.dll
+</SourceCode>
+  <ReferencedAssemblies />
+</H2>
