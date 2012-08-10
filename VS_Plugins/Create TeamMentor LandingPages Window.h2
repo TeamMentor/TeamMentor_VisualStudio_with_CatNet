@@ -34,6 +34,7 @@ browser.Navigating += (sender, e) =&gt;
 	};
 return "done";
 
+//using SecurityInnovaqtion.TeamMentor_VisualStudio_with_CatNet
 //O2File:VS_Scripts\TeamMentor_Gui.cs
 //O2Ref:TeamMentor_VisualStudio_with_CatNet.dll</SourceCode>
   <ReferencedAssemblies />

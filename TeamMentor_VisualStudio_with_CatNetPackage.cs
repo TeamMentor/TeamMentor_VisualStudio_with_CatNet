@@ -24,16 +24,9 @@ namespace SecurityInnovation.TeamMentor_VisualStudio_with_CatNet
     {
         public TeamMentor_VisualStudio_with_CatNetPackage()
         {
-            Trace.WriteLine("Entering constructor for: {0}".format(this.ToString()));
-            setLocalDevelopmentFolders();
+            Trace.WriteLine("Entering constructor for: {0}".format(this.ToString()));            
         }
 
-        public void setLocalDevelopmentFolders()
-        {
-            var tmDevDir = @"E:\TeamMentor\TeamMentor_VisualStudio_Extensions\TeamMentor_VisualStudio_with_CatNet";
-            var o2DevDir = @"E:\O2_V4\O2.FluentSharp\O2.FluentSharp.VisualStudio_2010";
-            CompileEngine.LocalFoldersToSearchForCodeFiles.add(o2DevDir).add(tmDevDir);
-        }
 
         protected override void Initialize()
         {

@@ -96,11 +96,8 @@ VisualStudio_2010.On_SolutionOpened.clear().add(buildSolution);
 
 visualStudio.errorList().add_Message("TeamMentor and CatNet is Setup");
 return "all_set";
-//_O2File:E:\O2_V4\O2.FluentSharp\O2.FluentSharp.VisualStudio_2010\ExtensionMethods\VisualStudio_2010_ExtensionMethods.cs
-//_O2File:E:\O2_V4\O2.FluentSharp\O2.FluentSharp.VisualStudio_2010\ExtensionMethods\VS_ErrorListProvider_ExtensionMethods.cs
-//_O2File:ExtensionMethods\VisualStudio_2010_ExtensionMethods.cs
-//_O2File:ExtensionMethods\VS_ErrorListProvider_ExtensionMethods.cs
-//O2File:E:\TeamMentor\TeamMentor_VisualStudio_Extensions\TeamMentor_VisualStudio_with_CatNet\VS_Scripts\TeamMentor_Gui.cs
+//using SecurityInnovaqtion.TeamMentor_VisualStudio_with_CatNet
+//O2File:VS_Scripts\TeamMentor_Gui.cs
 //O2File:API_CatNet.cs
 //O2Ref:TeamMentor_VisualStudio_with_CatNet.dll
 </SourceCode>

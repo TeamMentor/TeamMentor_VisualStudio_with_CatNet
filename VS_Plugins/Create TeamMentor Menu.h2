@@ -1,23 +1,32 @@
 <?xml version="1.0"?>
 <H2>
-  <SourceCode>
-"In Create TeamMentor Menu Script".info();
+  <SourceCode>"In Create TeamMentor Menu Script".info();
 var visualStudio = new VisualStudio_2010();
 var teamMentorGui = new TeamMentor_Gui();
-var scriptsFolder =  @"VS_PlugIns\Create TeamMentor Menu.h2".local().parentFolder();
-var TeamMentorMenu = visualStudio.dte().add_TopMenu("TeamMentor-1");
+var TeamMentorMenu = visualStudio.dte().add_TopMenu("TeamMentor_v4.2.3");
 
-TeamMentorMenu//.add_Menu_Button("--",()=&gt;{}) 
-		.add_Menu_Button("Open TeamMentor Landing Pages Window", ()=&gt; teamMentorGui.createLandingPagesWindow())
-		.add_Menu_Button("Open TeamMentor + Cat.Net Config Window", ()=&gt; teamMentorGui.createOptionsWindow())
-		.add_Menu_Button("Open Cat.NET -&gt; TeamMentor Mappings", ()=&gt; visualStudio.open_Document(@"TeamMentor_Files\CatNet_Mappings_TM_Embedded.xml".local()))
-		.add_Menu_Button("------- Debug-----")
-		.add_Menu_Button("Trigger Scan", () =&gt; visualStudio.dte().Solution.SolutionBuild.Build())			  
-          .add_Menu_Button("LogViewer", () =&gt; visualStudio.open_LogViewer())
-          .add_Menu_Button("Scripts Editor", ()=&gt; scriptsFolder.open_Script_Viewer_GUI())
-          .add_Menu_Button("Stand Alone Script Editor ", () =&gt; visualStudio.open_ScriptEditor());
+TeamMentorMenu.add_Menu_Button("Open Cat.NET -&gt; TeamMentor Mappings", ()=&gt; visualStudio.open_Document(@"TeamMentor_Files\CatNet_Mappings_TM_Embedded.xml".local()))
+			  .add_Menu_Button("Open VisualStudio PlugIn Editor", ()=&gt; @"VS_PlugIns\Create TeamMentor Menu.h2".local().parentFolder().open_Script_Viewer_GUI());
+
+TeamMentorMenu.add_SubMenu("TeamMentor Power Tools")
+		      .add_Menu_Button("TM Library Manager", ()=&gt; @"TeamMentor_PowerTools\LibraryManagement\TM - Library Manager (with REPL) v1.2.3.h2".executeH2Script())
+		      .add_Menu_Button("TM Browse and Edit Xml Files", ()=&gt; @"TeamMentor_PowerTools\LibraryManagement\TM - Browse and Edit XML Files (with REPL) v1.4.h2".executeH2Script())
+		      ;
+TeamMentorMenu.add_SubMenu("Open Folders")
+			  .add_Menu_Button("With this Extension files", () =&gt; "TeamMentor_VisualStudio_with_CatNet.dll".assembly_Location().parentFolder().startProcess())
+	     	  .add_Menu_Button("With Cat.NET files", ()=&gt; "CatNet_1.1/SourceDir/Microsoft.ACESec.CATNet.Core.dll".assembly().location().parentFolder().startProcess());
+
+TeamMentorMenu.add_SubMenu("Re-execute scripts") 
+		.add_Menu_Button("Create TeamMentor Landing Pages Window", ()=&gt; teamMentorGui.createLandingPagesWindow())
+		.add_Menu_Button("Create TeamMentor + Cat.Net Config Window", ()=&gt; teamMentorGui.createOptionsWindow());		
+	     	  
+var debugMenu = TeamMentorMenu.add_SubMenu("Debug Tools (for this extension)");		
+debugMenu.add_Menu_Button("Trigger Scan", () =&gt; visualStudio.dte().Solution.SolutionBuild.Build())			  
+         .add_Menu_Button("LogViewer", () =&gt; visualStudio.open_LogViewer())         
+         .add_Menu_Button("Stand Alone Script Editor ", () =&gt; visualStudio.open_ScriptEditor());
              
 return visualStudio;
+//using SecurityInnovaqtion.TeamMentor_VisualStudio_with_CatNet
 //O2File:VS_Scripts\TeamMentor_Gui.cs
 //O2Ref:TeamMentor_VisualStudio_with_CatNet.dll</SourceCode>
   <ReferencedAssemblies />

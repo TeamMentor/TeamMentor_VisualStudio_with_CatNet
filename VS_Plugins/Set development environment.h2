@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<H2>
+  <SourceCode>var tmDevDir = @"E:\TeamMentor\TeamMentor_VisualStudio_Extensions\TeamMentor_VisualStudio_with_CatNet";
+var o2DevDir = @"E:\O2_V4\O2.FluentSharp\O2.FluentSharp.VisualStudio_2010";
+CompileEngine.LocalFoldersToSearchForCodeFiles.clear().add(o2DevDir).add(tmDevDir);
+
+@"VS_PlugIns\Create TeamMentor Menu.h2".local().parentFolder().open_Script_Viewer_GUI();
+  </SourceCode>
+  <ReferencedAssemblies />
+</H2>

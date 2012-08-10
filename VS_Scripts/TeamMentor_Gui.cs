@@ -9,6 +9,7 @@ using O2.External.SharpDevelop.ExtensionMethods;
 using Microsoft.VisualStudio.CommandBars;
 using SecurityInnovation.TeamMentor_VisualStudio_with_CatNet;
 using O2.FluentSharp.REPL;
+using O2.FluentSharp;
 //O2Ref:TeamMentor_VisualStudio_with_CatNet.dll
 
 //O2File:ExtensionMethods\VisualStudio_2010_ExtensionMethods.cs
