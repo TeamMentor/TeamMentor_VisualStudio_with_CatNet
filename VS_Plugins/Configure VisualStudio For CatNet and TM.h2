@@ -6,51 +6,38 @@ var options = TeamMentor_Gui.Options;
 VisualStudio_2010.On_BuildBegin.clear().add(()=&gt; visualStudio.errorList().clear());
   
 VisualStudio_2010.On_ProjectBuild_OK.Clear();
+if (@"CatNet_1.1\SourceDir\Microsoft.ACESec.CATNet.Core.dll".assembly().isNull())
+	"There was an error finding Microsoft.ACESec.CATNet.Core.dll".error();
 //var project = @"SuperSecureBankService\SuperSecureBankService.csproj".project();
 //errorList.Show();
 //using Microsoft.VisualStudio.Shell;
-
-var catNetMappings = @"TeamMentor_Files\CatNet_Mappings_Embedded.xml".local().load&lt;CatNet_Rules_Mappings&gt;();
-
-Action&lt;ErrorTask&gt; itemSelected = 	
+var mappingsFileTouse = @"TeamMentor_Files\CatNet_Mappings_TM_Embedded.xml";//CatNet_Mappings_Embedded.xml
+Action&lt;ErrorTask&gt; itemSelected = 	 
 	(item)=&gt;{			
-				 
+				var catNetMappings = mappingsFileTouse.local().load&lt;CatNet_Rules_Mappings&gt;();
 				var browser= options.LandingPages_Browser;//"landingPages".o2Cache&lt;WebBrowser&gt;();
-				browser.windowBase().show(); 
-				/*Action remapBrowserLinks = 
-					()=&gt;{
-							
-							foreach(var link in browser.links())
-							{
-								var originalValue = link.attribute("href");
-								if(originalValue.starts("about:"))
-								{
-									var newValue = "http://teammentor.net/article/{0}".format(originalValue.remove("about:"));
-									//"Remaped browser Link '{0}' to '{1}'".info(originalValue, newValue);
-									link.attribute("href",newValue);
-								}
-								//.first()
-							}
-						};*/
+				browser.windowBase().show(); 		
 				O2Thread.mtaThread(
 					()=&gt;{
 							
-							var vulnType = item.Text;
-							//browser.open(item.Document);								
+							var vulnType = item.Text;													
 							if(catNetMappings.hasItem(vulnType))						
 							{
-								var target = catNetMappings.item(vulnType);
+								var targetItem = catNetMappings.item(vulnType);
+								"Found targetItem: {0}".debug(targetItem);
+								var target = targetItem.isUri() ? targetItem 
+															    : "{0}/article/{1}".format(options.TeamMentorServer, targetItem);
+								"targetItem mapped to: {0}".debug(target);
 								if (target.isUri())
-									browser.open(target); 
-								else
+								browser.open(target); 
+								/*else
 								{
 									var _file = @"TeamMentor_Files\{0}".format(target).local();
 									{												
 										browser.open(_file);
-										browser.waitForCompleted();												
-										//remapBrowserLinks();
+										browser.waitForCompleted();										
 									}
-								} 
+								} */
 							}  
 							else
 								browser.showMessage(vulnType); 
@@ -59,7 +46,15 @@ Action&lt;ErrorTask&gt; itemSelected =
 Action&lt;string&gt; onProjectBuild = 
 	(projectFile)=&gt;
 			{ 
-				options.LandingPages_Browser.open(options.DefaultPage);
+				if (options.AutoScanOnBuild.isFalse())
+				{
+					options.LandingPages_Browser.showMessage("TeamMentor Cat.Net Extension: &lt;br/&gt;&lt;br/&gt;AutoScan on Build is Disabled");
+					return ;
+				}
+				if (options.LandingPages_Browser.dte_Window().visible().isFalse())				
+					new TeamMentor_Gui().createLandingPagesWindow();		
+				else
+					options.LandingPages_Browser.open(options.DefaultPage);
 				var project = projectFile.project();
 				var assemblyToScan = project.pathTo_CompiledAssembly();
 				
@@ -94,8 +89,9 @@ VisualStudio_2010.On_ProjectBuild_OK.clear().add(onProjectBuild);
 
 VisualStudio_2010.On_SolutionOpened.clear().add(buildSolution);	
 
-visualStudio.errorList().add_Message("TeamMentor and CatNet is Setup");
+visualStudio.errorList().add_Message("TeamMentor and CatNet are configured");
 return "all_set";
+
 //using SecurityInnovaqtion.TeamMentor_VisualStudio_with_CatNet
 //O2File:VS_Scripts\TeamMentor_Gui.cs
 //O2File:API_CatNet.cs

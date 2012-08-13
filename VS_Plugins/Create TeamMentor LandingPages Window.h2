@@ -18,24 +18,43 @@ var browser = options.LandingPages_Browser;
 browser.open(options.DefaultPage);
 
 browser.Navigating += (sender, e) =&gt; 
-	{		
-		"Navigating to: {0}".info(e.Url); 
-		var open = e.Url.str().contains(@"/TeamMentor_Files/") || e.Url.str() == options.DefaultPage;
-		if(open.isFalse())
-		{
-			e.Cancel = true;
-			
-            var url = e.Url.str();
-            if(url.starts(@"about:"))
-                url = "http://teammentor.net/article/{0}".format(url.remove(@"about:"));
-            "Opening {0} in new window".info(url);
-			visualStudio.dte().ItemOperations.Navigate(url, EnvDTE.vsNavigateOptions.vsNavigateOptionsNewWindow);
+	{	
+		var url = e.Url.str();
+		"Navigating to: {0}".info(url); 
+		
+		if (url == "about:blank")
+			return;
+		//var open = e.Url.str().contains(@"/TeamMentor_Files/") || e.Url.str() == options.DefaultPage;
+		if (url== options.DefaultPage || url.lower().starts("javascript:"))
+			return;
+		var guid = url.split("/").last();//.remove("http://").removeLastChar(); 	
+		if (guid.isGuid())
+		{						
+			var mappingsFileTouse = @"TeamMentor_Files\CatNet_Mappings_TM_Embedded.xml";//CatNet_Mappings_Embedded.xml
+			var catNetMappings = mappingsFileTouse.local().load&lt;CatNet_Rules_Mappings&gt;();
+			foreach(var mapping in catNetMappings) // need a better way to do this
+				if(mapping.Target == guid)
+				{
+					"Found landing page so not opening link in new window".info();
+					return;
+				}
+
 		}
+		e.Cancel = true;
+		
+        
+        if(url.starts(@"about:"))
+        {
+            url = "http://teammentor.net/article/{0}".format(url.remove(@"about:"));
+        	//"Opening {0} in new window".info(url);
+        }
+		visualStudio.dte().ItemOperations.Navigate(url, EnvDTE.vsNavigateOptions.vsNavigateOptionsNewWindow);		
 	};
 return "done";
 
 //using SecurityInnovaqtion.TeamMentor_VisualStudio_with_CatNet
 //O2File:VS_Scripts\TeamMentor_Gui.cs
+//O2File:API_CatNet.cs
 //O2Ref:TeamMentor_VisualStudio_with_CatNet.dll</SourceCode>
   <ReferencedAssemblies />
 </H2>

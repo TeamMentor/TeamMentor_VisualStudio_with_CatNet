@@ -22,7 +22,7 @@ namespace SecurityInnovation.TeamMentor_VisualStudio_with_CatNet
         {
             AutoScanOnBuild = true;
             OpenLinksInNewTab = true;
-            TeamMentorServer = "http://teammentor.net";
+            TeamMentorServer = "http://tmbeta.sergelab.net";
             DefaultPage = "http://docs.teammentor.net/article/TeamMentor_Landing_Page";
         }
     }

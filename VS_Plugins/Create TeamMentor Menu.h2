@@ -3,9 +3,10 @@
   <SourceCode>"In Create TeamMentor Menu Script".info();
 var visualStudio = new VisualStudio_2010();
 var teamMentorGui = new TeamMentor_Gui();
-var TeamMentorMenu = visualStudio.dte().add_TopMenu("TeamMentor_v4.2.3");
+var TeamMentorMenu = visualStudio.dte().add_TopMenu("TeamMentor");
 
-TeamMentorMenu.add_Menu_Button("Open Cat.NET -&gt; TeamMentor Mappings", ()=&gt; visualStudio.open_Document(@"TeamMentor_Files\CatNet_Mappings_TM_Embedded.xml".local()))
+TeamMentorMenu.add_Menu_Button("View Options", ()=&gt; new VisualStudio_2010().open_Panel().add_PropertyGrid().show(TeamMentor_Gui.Options))
+			  .add_Menu_Button("Open Cat.NET -&gt; TeamMentor Mappings", ()=&gt; visualStudio.open_Document(@"TeamMentor_Files\CatNet_Mappings_TM_Embedded.xml".local()))
 			  .add_Menu_Button("Open VisualStudio PlugIn Editor", ()=&gt; @"VS_PlugIns\Create TeamMentor Menu.h2".local().parentFolder().open_Script_Viewer_GUI());
 
 TeamMentorMenu.add_SubMenu("TeamMentor Power Tools")
@@ -18,12 +19,14 @@ TeamMentorMenu.add_SubMenu("Open Folders")
 
 TeamMentorMenu.add_SubMenu("Re-execute scripts") 
 		.add_Menu_Button("Create TeamMentor Landing Pages Window", ()=&gt; teamMentorGui.createLandingPagesWindow())
-		.add_Menu_Button("Create TeamMentor + Cat.Net Config Window", ()=&gt; teamMentorGui.createOptionsWindow());		
-	     	  
+		.add_Menu_Button("Configure VisualStudio for Cat.Net and TeamMentor", ()=&gt; teamMentorGui.configureVisualStudioForCatNetAndTeamMentor());		
+TeamMentorMenu.add_SubMenu("Original Cat.NET AddIn") 		
+			  .add_Menu_Button("Start Original Cat.NET AddIn (open GUI and temp install)", ()=&gt; @"VS_PlugIns\Open Cat.NET original AddIn.h2".executeH2Script());
 var debugMenu = TeamMentorMenu.add_SubMenu("Debug Tools (for this extension)");		
 debugMenu.add_Menu_Button("Trigger Scan", () =&gt; visualStudio.dte().Solution.SolutionBuild.Build())			  
          .add_Menu_Button("LogViewer", () =&gt; visualStudio.open_LogViewer())         
-         .add_Menu_Button("Stand Alone Script Editor ", () =&gt; visualStudio.open_ScriptEditor());
+         .add_Menu_Button("Stand Alone Script Editor ", () =&gt; visualStudio.open_ScriptEditor())         
+;
              
 return visualStudio;
 //using SecurityInnovaqtion.TeamMentor_VisualStudio_with_CatNet

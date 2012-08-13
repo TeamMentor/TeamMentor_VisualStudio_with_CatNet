@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Vsix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="1.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2010">
   <Identifier Id="65976ba8-cfa3-4f2b-ac8c-d180a024e197">
-    <Name>TeamMentor VisualStudio with CatNet v1.4.2</Name>
+    <Name>TeamMentor VisualStudio with CatNet v1.4.3</Name>
     <Author>Security Innovation</Author>
-    <Version>1.4.2</Version>
+    <Version>1.4.3</Version>
     <Description xml:space="preserve">This is a an VisualStudio Extension that shows how TeamMentor can be integrated with a SAST tool</Description>
     <Locale>1033</Locale>
     <License>TM-TP License.rtf</License>

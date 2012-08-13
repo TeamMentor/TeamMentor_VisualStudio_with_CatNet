@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<H2>
+  <SourceCode>
+
+    var visualStudio = new VisualStudio_2010();
+
+    var panel = visualStudio.create_WinForms_Window_Float("Original Cat.NET Add-In");
+
+
+    var vsConnect = new VsConnect();
+
+    EnvDTE80.DTE2 application = visualStudio.dte();
+    ext_ConnectMode connectMode = ext_ConnectMode.ext_cm_Startup;
+    EnvDTE.AddIn addInInst = null;
+    Array custom = null;
+    vsConnect.OnConnection(application, connectMode, addInInst, ref custom);
+
+    var summaryView = panel.add_Control&lt;SummaryView&gt;();
+vsConnect.field("_summaryView", summaryView);
+summaryView.SetDte(application);
+summaryView.SetAddInInstance(addInInst);
+summaryView.Controller = vsConnect;
+
+return vsConnect;
+
+
+//using  Extensibility
+//using  Microsoft.ACESec.CATNet.UI
+//O2Ref:CatNet_1.1/SourceDir/Microsoft.ACESec.CATNet.Core.dll
+//O2Ref:CatNet_1.1/SourceDir/Microsoft.ACESec.CATNet.UI.VSAddIn.dll
+//O2Ref:Extensibility.dll
+			
+
+ //O2File:ExtensionMethods\VisualStudio_2010_ExtensionMethods.cs
+    
+  </SourceCode>
+  <ReferencedAssemblies />
+</H2>

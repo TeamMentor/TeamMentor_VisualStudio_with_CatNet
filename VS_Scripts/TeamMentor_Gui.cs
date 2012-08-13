@@ -79,7 +79,7 @@ namespace SecurityInnovaqtion.TeamMentor_VisualStudio_with_CatNet
         }
         public TeamMentor_Gui configureVisualStudioForCatNetAndTeamMentor()
         {
-            @"VS_Plugins\Script - Configure VisualStudio For CatNet and TM.h2".local().executeH2Script();
+            @"VS_Plugins\Configure VisualStudio For CatNet and TM.h2".local().executeH2Script();
             return this;
         }
         
@@ -88,21 +88,21 @@ namespace SecurityInnovaqtion.TeamMentor_VisualStudio_with_CatNet
         
 		public TeamMentor_Gui configureCatNetScanEnvironment()
 		{
-			var tmCatNetScript = @"VS_Scripts\Script - Configure VisualStudio For CatNet and TM.h2";
+			var tmCatNetScript = @"VS_Scripts\Configure VisualStudio For CatNet and TM.h2";
             tmCatNetScript.executeH2Script();
             return this;
 		}		
 
-        public Panel openScriptsViewer()
+        /*public Panel openScriptsViewer()
         {
             ////var baseFolder = @"E:\TeamMentor\TeamMentor_VisualStudio_Extensions\TeamMentor_VisualStudio_with_CatNet\VS_Scripts\";
-            var baseFolder = @"VS_Scripts\Script - Configure VisualStudio For CatNet and TM.h2".local().parentFolder();
+            var baseFolder = @"VS_Scripts\Configure VisualStudio For CatNet and TM.h2".local().parentFolder();
             var panel = visualStudio.create_WinForms_Window_Float("TeamMentor Scripts")
                                     .add_Panel()
                                     .insert_LogViewer();
             var script = panel.add_Script_With_FolderViewer(baseFolder);            
             return panel;
-        }
+        }*/
         
             
         public void installCatNet()
