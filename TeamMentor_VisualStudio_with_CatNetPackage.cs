@@ -20,7 +20,7 @@ namespace SecurityInnovation.TeamMentor_VisualStudio_with_CatNet
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
     [Guid(GuidList.guidTeamMentor_VisualStudio_with_CatNetPkgString)]
     [ProvideAutoLoad(UIContextGuids80.NoSolution)]
-    public sealed class TeamMentor_VisualStudio_with_CatNetPackage : Package
+    public sealed class TeamMentor_VisualStudio_with_CatNetPackage : NoSolution_Package
     {
         public TeamMentor_VisualStudio_with_CatNetPackage()
         {

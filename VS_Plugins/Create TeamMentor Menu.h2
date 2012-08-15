@@ -9,9 +9,9 @@ TeamMentorMenu.add_Menu_Button("View Options", ()=&gt; new VisualStudio_2010().o
 			  .add_Menu_Button("Open Cat.NET -&gt; TeamMentor Mappings", ()=&gt; visualStudio.open_Document(@"TeamMentor_Files\CatNet_Mappings_TM_Embedded.xml".local()))
 			  .add_Menu_Button("Open VisualStudio PlugIn Editor", ()=&gt; @"VS_PlugIns\Create TeamMentor Menu.h2".local().parentFolder().open_Script_Viewer_GUI());
 
-TeamMentorMenu.add_SubMenu("TeamMentor Power Tools")
-		      .add_Menu_Button("TM Library Manager", ()=&gt; @"TeamMentor_PowerTools\LibraryManagement\TM - Library Manager (with REPL) v1.2.3.h2".executeH2Script())
-		      .add_Menu_Button("TM Browse and Edit Xml Files", ()=&gt; @"TeamMentor_PowerTools\LibraryManagement\TM - Browse and Edit XML Files (with REPL) v1.4.h2".executeH2Script())
+//TeamMentorMenu.add_SubMenu("TeamMentor Power Tools")
+//		      .add_Menu_Button("TM Library Manager", ()=&gt; @"TeamMentor_PowerTools\LibraryManagement\TM - Library Manager (with REPL) v1.2.3.h2".executeH2Script())
+//		      .add_Menu_Button("TM Browse and Edit Xml Files", ()=&gt; @"TeamMentor_PowerTools\LibraryManagement\TM - Browse and Edit XML Files (with REPL) v1.4.h2".executeH2Script())
 		      ;
 TeamMentorMenu.add_SubMenu("Open Folders")
 			  .add_Menu_Button("With this Extension files", () =&gt; "TeamMentor_VisualStudio_with_CatNet.dll".assembly_Location().parentFolder().startProcess())
